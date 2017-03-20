@@ -15,7 +15,7 @@
               description="Name of the resource directory"/>
     <tstamp/>
     <!-- Build the project.revision property -->
-    <property name="distribution.version" value="${project.stage}-${project.version}"/>
+    <property name="distribution.version" value="${project.revision}"/>
     <echo>distribution.version = ${distribution.version}</echo>
     <property name="plugin.artifact.id" value="${plugin.name}"/>
     <property name="plugin.zipfile" value="${plugin.artifact.id}-${distribution.version}.zip"/>
@@ -33,13 +33,13 @@
         <copy todir="${stage.dir}/${plugin.name}/" overwrite="true">
             <fileset dir=".">
                 <include name="**/*"/>
-		<exclude name="bin/"/>
+                <exclude name="bin/"/>
             </fileset>
         </copy>
         <!-- create the version file -->
-	<tstamp/>
-	<property name="sequential.build.id" value="manual-${DSTAMP}"/>
-	<echo file="${stage.dir}/${plugin.name}/version.xml" message="&lt;version branch='${project.stage}' buildId='${sequential.build.id}'>${distribution.version}&lt;/version>"/>
+        <tstamp/>
+        <property name="sequential.build.id" value="manual-${DSTAMP}"/>
+        <echo file="${stage.dir}/${plugin.name}/version.xml" message="&lt;version branch='${project.stage}' buildId='${sequential.build.id}'>${distribution.version}&lt;/version>"/>
         <!-- create a zip file -->
         <zip zipfile="${dist.dir}/${plugin.zipfile}"
              basedir="${stage.dir}"
@@ -51,7 +51,7 @@
             <version>
                 <branch>${project.stage}</branch>
                 <version>${distribution.version}</version>
-                <name>Trunk</name>
+                <name>${project.stage}</name>
                 <package_url>not defined</package_url>
                 <description>@PLUGIN_PACKAGE_DESCRIPTION@</description>
                 <build_id>${sequential.build.id}</build_id>
@@ -95,29 +95,6 @@
         Builds a language pack: duplicate the plugin, delete
         unnecessary files
         ====================================================================-->
-    <target name="build-language-pack-lazy4" description="Builds a specific language pack in a lazy way: duplicate the plugin using sparkl, delete unnecessary files">
-        <property name="langpack.name">languagePack-${langCode}</property>
-        <!-- lazyiest approach using 4.8 -->
-        <get src="http://127.0.0.1:8080/pentaho/content/sparkl/duplicatePlugin?source_pluginId=${plugin.name}&amp;dest_pluginId=${langpack.name}&amp;userid=${plugin.local.install.user}&amp;password=${plugin.local.install.pass}"
-             dest="${stage.dir}/blah.html"/>
-    </target>
-    <target name="build-language-pack-lazy" description="Builds a specific language pack in a lazy way: duplicate the plugin using sparkl, delete unnecessary files">
-        <fail message="plugin.local.install.solutions.dir not set - cannot copy"
-              unless="plugin.local.install.solutions.dir"/>
-        <property name="langpack.name">languagePack-${langCode}</property>
-        <!-- lazyiest approach using 5.0+ -->
-        <get src="http://127.0.0.1:8080/pentaho/plugin/sparkl/api/duplicatePlugin?paramsource_pluginId=${plugin.name}&amp;paramdest_pluginId=${langpack.name}"
-             username="${plugin.local.install.user}"
-             password="${plugin.local.install.pass}"
-             dest="${stage.dir}/blah.html"/>
-        <delete includeemptydirs="true">
-            <fileset dir="${plugin.local.install.solutions.dir}/system/${langpack.name}/data"
-                     excludes="${langCode}/**/*" />
-        </delete>
-        <move file="${plugin.local.install.solutions.dir}/system/${langpack.name}/data/${langCode}/metadata.json"
-              tofile="${plugin.local.install.solutions.dir}/system/${langpack.name}/data/metadata.json"/>
-    </target>
-
     <scriptdef language="javascript" name="upper">
         <attribute name="string" />
         <attribute name="to" />
@@ -165,11 +142,12 @@
             <!-- handle .properties inside jars -->
             <native2ascii encoding="UTF-8" src="${basedir}/data/${langCode}"
                           dest="${stage.dir}/${langpack.name}/data/${langCode}">
-                <include name="**/*_jar/**/*" />
-                <include name="**/system/analyzer/**/*_${langCode}.properties"/>
-                <include name="**/system/dashboards/**/*_${langCode}.properties"/>
-                <include name="**/system/data-access/**/*_${langCode}.properties"/>
-                <include name="**/system/pentaho-geo/**/*_${langCode}.properties"/>
+              <include name="**/*_${langCode}.properties" />
+                <!-- <include name="**/*_jar/**/*" /> -->
+                <!-- <include name="**/system/analyzer/**/*_${langCode}.properties"/> -->
+                <!-- <include name="**/system/dashboards/**/*_${langCode}.properties"/> -->
+                <!-- <include name="**/system/data-access/**/*_${langCode}.properties"/> -->
+                <!-- <include name="**/system/pentaho-geo/**/*_${langCode}.properties"/> -->
             </native2ascii>
 
             <!--copy remaining files into the staging folder  -->
@@ -181,12 +159,20 @@
                     <exclude name="${bin.dir.relative}/**"/>
                     <exclude name="data/**"/>
                     <exclude name="${dist.dir.relative}/**"/>
+                    <exclude name="translations/**"/>
+                    <exclude name="tools/**"/>
+                    <exclude name="documentation/**"/>
                 </fileset>
                 <fileset dir="${basedir}">
                     <include name="data/${langCode}/system/**"/>
                     <include name="data/${langCode}/tomcat/**"/>
                 </fileset>
             </copy>
+
+            <!-- Remove any remaining <TRANSLATE ME> tags to avoid breaking the UI -->
+            <replace dir="${stage.dir}/${langpack.name}/data" token="&lt;TRANSLATE ME&gt;" value=""/>
+
+            <!-- Add metadata.json -->
             <property name="metadata.json" value="${stage.dir}/${langpack.name}/data/metadata.json"/>
             <copy file="${basedir}/data/${langCode}/metadata.json"
                   tofile="${metadata.json}"/>
@@ -247,12 +233,17 @@
             <echo>Read from ${metadata.json}: appTitle = ${langpack.metadata.appTitle}...</echo>
 
             <!-- create the version file -->
+            <condition property="langpack.distribution.version" 
+                       value="${langpack.metadata.version}" 
+                       else="${distribution.version}">
+                <isset property="langpack.metadata.version"/>
+            </condition>
+            <!--<property name="langpack.distribution.version" value="${langpack.metadata.version}"/>-->
             <tstamp/>
             <property name="sequential.build.id" value="manual-${DSTAMP}"/>
             <echoxml file="${stage.dir}/${langpack.name}/version.xml">
-		<version branch='${project.stage}' buildId='${sequential.build.id}'>${distribution.version}</version>
+                <version branch='${project.stage}' buildId='${sequential.build.id}'>${langpack.distribution.version}</version>
             </echoxml>
-
 
 
             <!-- Update plugin metadata -->
@@ -263,20 +254,13 @@
                 <!-- <?xml version="1.0" encoding="UTF-8" standalone="no"?> -->
                 <plugin loader="DEFAULT" title="${langpack.name}" name="${langpack.name}">
                     <overlays>
-                        <!-- <overlay id="startup.menu_langPacks"> -->
-                        <!--     <menubar id="toolsmenu"> -->
-                        <!--         <menubar id="languagePacks" label="Language Packs"> -->
-                        <!--             <menuitem id="ola" label="Ola"/> -->
-                        <!--         </menubar> -->
-                        <!--     </menubar> -->
-                        <!-- </overlay> -->
                         <overlay id="startup.${langpack.name}" resourcebundle="content/${langpack.name}/resources/lang/messages">
                             <menubar id="toolsmenu">
-                                <!-- <menupopup id="languagePacks" label="Language Packs"> -->
+                                <menubar id="languagePacks" label="${Launcher.menuLanguagePacks}" layout="vertical">
                                     <menuitem id="${langpack.name}"
                                               label="${languagePack.title}"
                                               command="mantleXulHandler.openUrl('${languagePack.title}','${languagePack.title}','plugin/${langpack.name}/api/main')"/>
-                                <!-- </menupopup> -->
+                                </menubar>
                             </menubar>
 
                         </overlay>
@@ -332,35 +316,41 @@
         <!-- Update dashboards -->
         <upper string="${plugin.name}" to="plugin.NAME" />
         <upper string="${langpack.name}" to="langpack.NAME" />
-        <replace dir="${stage.dir}/${langpack.name}/dashboards" includes="*.cdfde">
+        <replace dir="${stage.dir}/${langpack.name}/dashboards" includes="**/*.cdfde">
             <replacefilter token="&quot;${plugin.name}&quot;" value="&quot;${langpack.name}&quot;"/> <!--covers: meta_pluginID -->
             <replacefilter token="Components${plugin.name}_" value="Components${langpack.name}_"/> <!--covers: CPK datasources -->
-            <replacefilter token="/${plugin.name}/" value="/${langpack.name}/"/> <!--covers: resource paths, filename -->
             <replacefilter token="${plugin.NAME}" value="${langpack.NAME}"/> <!--covers: CPK datasources -->
+            <replacefilter token="/${plugin.name}/" value="/${langpack.name}/"/> <!--covers: resource paths, filename -->
         </replace>
 
         <!-- Inherit the project.revision property -->
         <property name="langpack.artifact.id" value="${langpack.name}"/>
-        <property name="langpack.zipfile" value="${langpack.artifact.id}-${distribution.version}.zip"/>
+        <property name="langpack.zipfile" value="${langpack.artifact.id}-${langpack.distribution.version}.zip"/>
         <property name="langpack.package.url" value="http://ci.analytical-labs.com/job/Webdetails-languagePackInstallers/lastSuccessfulBuild/artifact/dist/${langpack.zipfile}"/>
 
 
         <!-- create a zip file -->
         <zip zipfile="${dist.dir}/${langpack.zipfile}"
              basedir="${stage.dir}"
-             excludes="**/Thumbs.db **/.DS_Store"
+             excludes="**/Thumbs.db **/.DS_Store **/.git"
              includes="${langpack.name}/**/*" />
-        <move tofile="${dist.dir}/${langpack.name}-${project.revision}.zip" file="${dist.dir}/${langpack.zipfile}"/>
+        <move tofile="${dist.dir}/${langpack.name}-${langpack.distribution.version}.zip" file="${dist.dir}/${langpack.zipfile}"/>
 
         <!-- create a marketplace.xml file -->
         <echoxml file="${dist.dir}/${langpack.name}.marketplace.xml">
             <version>
-		<branch>${project.stage}</branch>
-                <version>${distribution.version}</version>
-                <name>Trunk</name>
+                <branch>${project.stage}</branch>
+                <version>${langpack.distribution.version}</version>
+                <name>${project.stage}</name>
                 <package_url>${langpack.package.url}</package_url>
                 <description>${here.languagePack.title}</description>
                 <build_id>${sequential.build.id}</build_id>
+                <min_parent_version>${marketplace.metadata.min_parent_version}</min_parent_version>
+                <max_parent_version>${marketplace.metadata.max_parent_version}</max_parent_version>
+                <development_stage>
+                  <lane>${langpack.metadata.maturity.lane}</lane>
+                  <phase>${langpack.metadata.maturity.phase}</phase>
+                </development_stage>
             </version>
         </echoxml>
 
@@ -374,10 +364,12 @@
                 <filter token="langpack.metadata.maintainer.name" value="${langpack.metadata.maintainer.name}"/>
                 <filter token="langpack.metadata.maintainer.url" value="${langpack.metadata.maintainer.url}"/>
                 <filter token="langpack.metadata.maintainer.img" value="${langpack.metadata.maintainer.img}"/>
+                <filter token="langpack.metadata.maturity.lane" value="${langpack.metadata.maturity.lane}"/>
+                <filter token="langpack.metadata.maturity.phase" value="${langpack.metadata.maturity.phase}"/>
                 <filter token="langpack.package.url" value="${langpack.package.url}"/>
                 <filter token="langCode" value="${langCode}"/>
-                <filter token="project.revision" value="${project.revision}"/>
-                <filter token="project.version" value="${project.version}"/>
+                <filter token="project.stage" value="${project.stage}"/>
+                <filter token="project.revision" value="${langpack.distribution.version}"/>
             </filterset>
         </copy>
         <available file="${basedir}/data/${langCode}/resources/img/flag.png" property="market.entry.img.present"/>
@@ -412,13 +404,21 @@
     <target name="build-language-packs" depends="clean, resolve"
             description="Builds all language packs">
         <antcall target="install-antcontrib"/>
-        <foreach target="infer-and-build-language-pack" param="langCodeFolder">
-            <path>
-                <dirset dir="${basedir}/data/">
-                    <include name="*"/>
-                </dirset>
-            </path>
-        </foreach>
+        <if>
+            <isset property="languageCodes"/>
+            <then>
+                <foreach list="${languageCodes}" target="infer-and-build-language-pack" param="langCodeFolder"/>
+            </then>
+            <else>
+                <foreach target="infer-and-build-language-pack" param="langCodeFolder">
+                    <path>
+                        <dirset dir="${basedir}/data/">
+                            <include name="*"/>
+                        </dirset>
+                    </path>
+                </foreach>
+            </else>
+        </if>
     </target>
 
     <target name="install-packs" depends="build-language-packs">

@@ -1,31 +1,29 @@
 {
     "appTitle": "Dutch Language Pack Installer",
-    "appWelcomeMessage": "This plugin installs language definitions for the Dutch language in Pentaho 5",
+    "appWelcomeMessage": "This plugin installs language definitions for the Dutch language in Pentaho",
     "language": "Nederlans",
     "languageCode": "nl",
-    "version": "1.0",
-    "pentahoVersion": "5.0.1",
+    "pentahoVersion": "7.0",
+    "maturity": {
+        "lane": "Community",
+        "phase": "2"
+    },
     "maintainer": {
         "name": "C. van Kemenade",
         "email": "pentaho_nl@vinzi.nl",
         "img": "",
         "url": "http:\/\/www.vinzi.nl"
     },
-    "credits": [
-        {
-            "name": "",
-            "email": "",
-            "img": "",
-            "url": ""
-        }
-    ],
-    "sponsors": [
-        {
-            "name": "",
-            "email": "",
-            "img": "",
-            "url": ""
-        }
-    ],
-
+    "credits": [{
+        "name": "",
+        "email": "",
+        "img": "",
+        "url": ""
+    }],
+    "sponsors": [{
+        "name": "",
+        "email": "",
+        "img": "",
+        "url": ""
+    }]
 }

@@ -1,31 +1,29 @@
 {
-    "appTitle": "French Language Pack Installer",
-    "appWelcomeMessage": "This plugin installs language definitions for the French language in Pentaho 5",
-    "language": "Français",
+    "appTitle": "Programme d'installation de la langue française",
+    "appWelcomeMessage": "Ce plugin installe les définitions de la langue pour la langue française dans Pentaho",
+    "language": "France",
     "languageCode": "fr",
-    "version": "1.0",
-    "pentahoVersion": "5.0.1",
-    "maintainer": {
-        "name": "Sylvain Decloix",
-        "email": "s.decloix@atolcd.com",
-        "img": "",
-        "url": "http:\/\/www.atolcd.com"
+    "pentahoVersion": "7.0",
+    "maturity": {
+        "lane": "Community",
+        "phase": "2"
     },
-    "credits": [
-        {
-            "name": "",
-            "email": "",
-            "img": "",
-            "url": ""
-        }
-    ],
-    "sponsors": [
-        {
-            "name": "",
-            "email": "",
-            "img": "",
-            "url": ""
-        }
-    ],
-
+    "maintainer": {
+        "name": "",
+        "email": "",
+        "img": "",
+        "url": ""
+    },
+    "credits": [{
+        "name": "",
+        "email": "",
+        "img": "",
+        "url": ""
+    }],
+    "sponsors": [{
+        "name": "",
+        "email": "",
+        "img": "",
+        "url": ""
+    }]
 }

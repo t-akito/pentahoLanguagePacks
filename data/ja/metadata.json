@@ -1,31 +1,29 @@
 {
     "appTitle": "Japanese Language Pack Installer",
-    "appWelcomeMessage": "This plugin installs language definitions for the Japanese language in Pentaho 5",
+    "appWelcomeMessage": "This plugin installs language definitions for the Japanese language in Pentaho",
     "language": "Japanese",
     "languageCode": "ja",
-    "version": "0.1",
-    "pentahoVersion": "5.0.3",
+    "pentahoVersion": "7.0",
+    "maturity": {
+        "lane": "Community",
+        "phase": "2"
+    },
     "maintainer": {
-        "name": "Akito Tanaka",
-        "email": "akito.tanaka@ksk-anl.com",
+        "name": "KSK Analytics Inc.",
+        "email": "",
         "img": "",
         "url": "http://ksk-anl.com/"
     },
-    "credits": [
-        {
-            "name": "Akito Tanaka",
-            "email": "akito.tanaka@ksk-anl.com",
-            "img": "",
-            "url": "http://ksk-anl.com/"
-        }
-    ],
-    "sponsors": [
-        {
-            "name": "Akito Tanaka",
-            "email": "akito.tanaka@ksk-anl.com",
-            "img": "",
-            "url": "http://ksk-anl.com/"
-        }
-    ],
-
+    "credits": [{
+        "name": "KSK Analytics Inc.",
+        "email": "",
+        "img": "",
+        "url": "http://ksk-anl.com/"
+    }],
+    "sponsors": [{
+        "name": "KSK Analytics Inc.",
+        "email": "",
+        "img": "",
+        "url": "http://ksk-anl.com/"
+    }]
 }

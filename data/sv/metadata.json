@@ -1,31 +1,29 @@
 {
     "appTitle": "Swedish Language Pack Installer",
-    "appWelcomeMessage": "This plugin installs language definitions for the Swedish language in Pentaho 5",
+    "appWelcomeMessage": "This plugin installs language definitions for the Swedish language in Pentaho",
     "language": "Svenska",
     "languageCode": "sv",
-    "version": "0.1",
-    "pentahoVersion": "5.0.1",
-    "maintainer": {
-        "name": "",
-        "email": "",
-        "img": "",
-        "url": "http:\/\/www.pentaho.com"
+    "pentahoVersion": "7.0",
+    "maturity": {
+        "lane": "Community",
+        "phase": "2"
     },
-    "credits": [
-        {
-            "name": "",
-            "email": "",
-            "img": "",
-            "url": ""
-        }
-    ],
-    "sponsors": [
-        {
-            "name": "",
-            "email": "",
-            "img": "",
-            "url": ""
-        }
-    ],
-
+    "maintainer": {
+        "name": "Kenneth Wrife, Omicron Ceti AB",
+        "email": "ken@omicron.se",
+        "img": "",
+        "url": "http:\/\/www.omicron.se"
+    },
+    "credits": [{
+        "name": "Omicron Ceti AB",
+        "email": "info@omicron.se",
+        "img": "",
+        "url": "http:\/\/www.omicron.se"
+    }],
+    "sponsors": [{
+        "name": "Omicron Ceti AB",
+        "email": "info@omicron.se",
+        "img": "",
+        "url": "http:\/\/www.omicron.se"
+    }]
 }

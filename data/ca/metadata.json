@@ -1,31 +1,29 @@
 {
-    "appTitle": "Catalan Language Pack Installer",
-    "appWelcomeMessage": "This plugin installs language definitions for the Catalan language in Pentaho 5",
-    "language": "Catalan",
+    "appTitle": "Paquet d'instal·lació de l'idioma català",
+    "appWelcomeMessage": "Aquest plugin instal·la les definicions d'idioma per l'idioma català en Pentaho",
+    "language": "Català",
     "languageCode": "ca",
-    "version": "0.1",
-    "pentahoVersion": "5.0.1",
-    "maintainer": {
-        "name": "",
-        "email": "",
-        "img": "",
-        "url": ""
+    "pentahoVersion": "7.0",
+    "maturity": {
+        "lane": "Community",
+        "phase": "2"
     },
-    "credits": [
-        {
-            "name": "",
-            "email": "",
-            "img": "",
-            "url": ""
-        }
-    ],
-    "sponsors": [
-        {
-            "name": "",
-            "email": "",
-            "img": "",
-            "url": ""
-        }
-    ],
-
+    "maintainer": {
+        "name": "Blau Advisors Strategic Partners,S.L.",
+        "email": "pentaho@blauadvisors.com",
+        "img": "",
+        "url": "http:\/\/www.blauadvisors.com"
+    },
+    "credits": [{
+        "name": "Blau Advisors Strategic Partners,S.L.",
+        "email": "pentaho@blauadvisors.com",
+        "img": "",
+        "url": "http:\/\/www.blauadvisors.com"
+    }],
+    "sponsors": [{
+        "name": "Blau Advisors Strategic Partners,S.L.",
+        "email": "pentaho@blauadvisors.com",
+        "img": "",
+        "url": "http:\/\/www.blauadvisors.com"
+    }]
 }

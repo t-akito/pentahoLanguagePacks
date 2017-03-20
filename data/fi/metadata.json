@@ -1,0 +1,29 @@
+{
+    "appTitle": "Finnish Language Pack Installer",
+    "appWelcomeMessage": "This plugin installs language definitions for the Finnish language in Pentaho",
+    "language": "Suomi",
+    "languageCode": "fi",
+    "pentahoVersion": "7.0",
+    "maturity": {
+        "lane": "Community",
+        "phase": "2"
+    },
+    "maintainer": {
+        "name": "Antti Loukiala",
+        "email": "antti.loukiala@gmail.com",
+        "img": "",
+        "url": ""
+    },
+    "credits": [{
+        "name": "Antti Loukiala",
+        "email": "antti.loukiala@gmail.com",
+        "img": "",
+        "url": ""
+    }],
+    "sponsors": [{
+        "name": "Antti Loukiala",
+        "email": "antti.loukiala@mylab.fi",
+        "img": "",
+        "url": "http://www.mylab.fi"
+    }]
+}

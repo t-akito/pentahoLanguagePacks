@@ -1,0 +1,29 @@
+{
+    "appTitle": "Thai Language Pack Installer",
+    "appWelcomeMessage": "This plugin installs language definitions for the Thai language in Pentaho",
+    "language": "Thai",
+    "languageCode": "th",
+    "pentahoVersion": "7.0",
+    "maturity": {
+        "lane": "Community",
+        "phase": "2"
+    },
+    "maintainer": {
+        "name": " Panicha Sriarj",
+        "email": "panicha@goingjesse.com",
+        "img": "",
+        "url": "http://goingjesse.com"
+    },
+    "credits": [{
+        "name": " Panicha Sriarj",
+        "email": "panicha@goingjesse.com",
+        "img": "",
+        "url": "http://goingjesse.com"
+    }],
+    "sponsors": [{
+        "name": " Ittishait Visaitassanakul",
+        "email": "ittishait@goingjesse.com",
+        "img": "",
+        "url": "http://goingjesse.com"
+    }]
+}

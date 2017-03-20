@@ -1,0 +1,29 @@
+{
+    "appTitle": "Română Language Pack Installer",
+    "appWelcomeMessage": "This plugin installs language definitions for the Română language in Pentaho",
+    "language": "Română",
+    "languageCode": "ro",
+    "pentahoVersion": "7.0",
+    "maturity": {
+        "lane": "Community",
+        "phase": "2"
+    },
+    "maintainer": {
+        "name": "",
+        "email": "",
+        "img": "",
+        "url": ""
+    },
+    "credits": [{
+        "name": "",
+        "email": "",
+        "img": "",
+        "url": ""
+    }],
+    "sponsors": [{
+        "name": "",
+        "email": "",
+        "img": "",
+        "url": ""
+    }]
+}
